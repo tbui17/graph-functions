@@ -17,7 +17,7 @@ const byType: EdgeEntryFilter<ObjectWithTypeFieldPassthrough, Attributes> = (
 	edgeEntry
 ) => edgeEntry.sourceAttributes.type > edgeEntry.targetAttributes.type
 
-export function realignGraphEdgesByType<
+export function realignGraphEdgesByNodeType<
 	TGraph extends Graph<ObjectWithTypeFieldPassthrough>,
 >(graph: TGraph) {
 	realignGraphEdges(graph, byType)
