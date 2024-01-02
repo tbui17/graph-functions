@@ -53,29 +53,39 @@ export function mapFilterEdgeEntries<TGraph extends Graph, TReturn>(
 		typeof fnOrNeighbor === "string" &&
 		typeof fn === "function"
 	) {
-		return graph
-			.mapEdges(fnOrNode, fnOrNeighbor, (...args) => {
-				//@ts-expect-error Returns expected type in actual use.
-				return fn(mapCallbackParametersToEdgeEntry(args))
-			})
-			.filter(noUndefined)
+		const result: any[] = []
+		graph.forEachEdge(fnOrNode, fnOrNeighbor, (...args) => {
+			//@ts-expect-error Returns expected type in actual use.
+
+			const res = fn(mapCallbackParametersToEdgeEntry(args))
+			if (res !== undefined) {
+				result.push(res)
+			}
+		})
+		return result
 	}
 
 	if (typeof fnOrNode === "string" && typeof fnOrNeighbor === "function") {
-		return graph
-			.mapEdges(fnOrNode, (...args) => {
-				//@ts-expect-error Returns expected type in actual use.
-				return fnOrNeighbor(mapCallbackParametersToEdgeEntry(args))
-			})
-			.filter(noUndefined)
+		const result: any[] = []
+		graph.forEachEdge(fnOrNode, (...args) => {
+			//@ts-expect-error Returns expected type in actual use.
+			const res = fnOrNeighbor(mapCallbackParametersToEdgeEntry(args))
+			if (res !== undefined) {
+				result.push(res)
+			}
+		})
+		return result
 	}
 	if (typeof fnOrNode === "function") {
-		return graph
-			.mapEdges((...args) => {
-				//@ts-expect-error Returns expected type in actual use.
-				return fnOrNode(mapCallbackParametersToEdgeEntry(args))
-			})
-			.filter(noUndefined)
+		const result: any[] = []
+		graph.forEachEdge((...args) => {
+			//@ts-expect-error Returns expected type in actual use.
+			const res = fnOrNode(mapCallbackParametersToEdgeEntry(args))
+			if (res !== undefined) {
+				result.push(res)
+			}
+		})
+		return result
 	}
 	throw new Error("Invalid arguments")
 }

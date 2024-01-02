@@ -36,7 +36,7 @@ export class RecursorContext<TGraph extends Graph> {
 	}
 
 	public edges() {
-		return this.graph.edges(this.source, this.target)
+		return this.graph.edges(this.source, this.target)!
 	}
 
 	public edgeEntries() {
@@ -47,18 +47,11 @@ export class RecursorContext<TGraph extends Graph> {
 	}
 
 	public edge() {
-		return this.graph.edge(this.source, this.target)
+		return this.graph.edge(this.source, this.target)!
 	}
 
-	public directedEdge() {
-		return this.graph.directedEdge(this.source, this.target)
-	}
-
-	public directedEdgeAttributes() {
-		return this.graph.getDirectedEdgeAttributes(
-			this.source,
-			this.target
-		) as InferGraphEdge<TGraph>
+	public directedEdges() {
+		return this.graph.directedEdges(this.source, this.target)
 	}
 
 	public inEdges() {

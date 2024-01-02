@@ -59,20 +59,23 @@ export function getGraphNodesOfType<
 >(graph: TGraph, types: TTypes): GetGraphNodesofTypeResult<TGraph, TTypes> {
 	const nodes = {} as any
 	if (typeof types === "string") {
-		return getGraphNodesOfTypeImpl(graph, types) as GetGraphNodesofTypeResult<TGraph, TTypes>
+		return getGraphNodesOfTypeSingle(
+			graph,
+			types
+		) as GetGraphNodesofTypeResult<TGraph, TTypes>
 	} else if (Array.isArray(types)) {
 		for (const type of types) {
-			nodes[type] = getGraphNodesOfTypeImpl(graph, type)
+			nodes[type] = getGraphNodesOfTypeSingle(graph, type)
 		}
 	} else {
 		for (const type in types) {
-			nodes[type] = getGraphNodesOfTypeImpl(graph, type)
+			nodes[type] = getGraphNodesOfTypeSingle(graph, type)
 		}
 	}
 
 	return nodes
 }
-function getGraphNodesOfTypeImpl<
+function getGraphNodesOfTypeSingle<
 	TGraph extends GraphWithTypeForNode,
 	const TType extends GetGraphTypeField<TGraph>,
 >(graph: TGraph, type: TType) {
