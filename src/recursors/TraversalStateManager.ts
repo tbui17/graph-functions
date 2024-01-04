@@ -1,6 +1,9 @@
 import { Queue } from "js-sdsl"
 
-export class TraversalStateManager<T = any> {
+/**
+ * Obscure bug found; debugging WIP.
+ */
+class TraversalStateManager<T = any> {
 	private queue = new Queue<{
 		path: T[]
 		current: T
