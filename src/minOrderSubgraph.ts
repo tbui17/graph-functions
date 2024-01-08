@@ -10,15 +10,15 @@ import {
 } from "."
 
 /**
- * Assumes provided graph is an unweighted undirected graph.
+ * Assumes provided graph was originally an unweighted DAG, creates an undirected unweighted copy for this solution.
  *
- * Retrieves smallest subgraph containing all specified terminal nodes, disregarding weight. The copy is returned as an undirected graph.
+ * Retrieves smallest subgraph containing all specified terminal nodes, disregarding weight and direction. The copy is returned as an undirected graph.
  *
  * @returns The subgraph if the nodes are connected.
  *
- * @throws {SteinerSubgraphError} - If the provided nodes are not connected in the original graph.
+ * @throws {SubgraphError} - If the provided nodes are not connected in the original graph.
  */
-export function unweightedSteinerSubgraph<TGraph extends Graph>(
+export function minOrderSubgraph<TGraph extends Graph>(
 	graph: TGraph,
 	nodes: string[]
 ) {
@@ -82,7 +82,7 @@ function mergeKeyNodeComponentIntoSubgraph(
 	})
 }
 
-export class SteinerSubgraphError extends Error {
+export class SubgraphError extends Error {
 	constructor(nodeA: string, nodeB: string, nodeInput: string[]) {
 		const msg = {
 			message: `Provided nodes are not connected.`,
@@ -119,7 +119,7 @@ function prepareSubgraphData(graph: Graph, nodeInput: string[]) {
 	allPairsEach(nodeInput, (nodeA, nodeB) => {
 		const path = bidirectional(graph, nodeA, nodeB)
 		if (!path) {
-			throw new SteinerSubgraphError(nodeA, nodeB, nodeInput)
+			throw new SubgraphError(nodeA, nodeB, nodeInput)
 		}
 		shortestPathAdder(path)
 	})
