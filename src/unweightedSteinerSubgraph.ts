@@ -10,7 +10,7 @@ import {
 } from "."
 
 /**
- * Assumes provided graph is an unweighted DAG.
+ * Assumes provided graph is an unweighted undirected graph.
  *
  * Retrieves smallest subgraph containing all specified terminal nodes, disregarding weight. The copy is returned as an undirected graph.
  *
