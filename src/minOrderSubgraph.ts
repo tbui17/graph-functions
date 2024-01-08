@@ -92,7 +92,7 @@ export class SubgraphError extends Error {
 		}
 		const message = JSON.stringify(msg)
 		super(message)
-		this.name = "SteinerSubgraphError"
+		this.name = "SubgraphError"
 	}
 }
 
