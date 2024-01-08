@@ -1,10 +1,10 @@
 import { describe, expect, expectTypeOf, it } from "vitest"
-import { TestGraph } from "./testUtils/testGraph"
+import { TestGraph1 } from "./testUtils/testGraph"
 import { getGraphNodesOfType } from ".."
-import { NodeEntry } from "graphology-types"
+import { type NodeEntry } from "graphology-types"
 
 describe("getGraphNodesOfType", () => {
-	const g = new TestGraph()
+	const g = new TestGraph1()
 
 	const nodeA = { type: "a", propA: "a" } as const
 	const nodeA2 = { type: "a", propA: "a2" } as const

@@ -17,12 +17,26 @@ const byType: EdgeEntryFilter<ObjectWithTypeFieldPassthrough, Attributes> = (
 	edgeEntry
 ) => edgeEntry.sourceAttributes.type > edgeEntry.targetAttributes.type
 
+/**
+ * Realigns the edges of a graph based on the node type.
+ * 
+ * @template TGraph - The type of the graph.
+ * @param {TGraph} graph - The graph to realign the edges of.
+ * @returns {void}
+ */
 export function realignGraphEdgesByNodeType<
 	TGraph extends Graph<ObjectWithTypeFieldPassthrough>,
 >(graph: TGraph) {
 	realignGraphEdges(graph, byType)
 }
 
+/**
+ * Realigns the edges of a graph based on the provided filter(s).
+ * 
+ * @template TGraph - The type of the graph.
+ * @param {TGraph} graph - The graph to realign the edges of.
+ * @param {EdgeEntryFilter<InferGraphNode<TGraph>, InferGraphEdge<TGraph>> | EdgeEntryFilter<InferGraphNode<TGraph>, InferGraphEdge<TGraph>>[]} filter - The filter(s) to apply to the edges.
+ */
 export function realignGraphEdges<TGraph extends Graph>(
 	graph: TGraph,
 	filter:

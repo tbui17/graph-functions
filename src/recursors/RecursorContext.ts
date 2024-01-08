@@ -13,6 +13,10 @@ import {
 	mapFilterEdges,
 } from ".."
 
+/**
+ * Represents a context for graph recursion.
+ * @template TGraph - The type of the graph.
+ */
 export class RecursorContext<TGraph extends Graph> {
 	constructor(
 		public graph: TGraph,

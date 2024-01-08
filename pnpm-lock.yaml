@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@tbui17/iteration-utilities':
+    specifier: ^2.0.2
+    version: 2.0.2
   '@tbui17/type-utils':
     specifier: ^2.1.2
     version: 2.1.2
@@ -14,9 +17,18 @@ dependencies:
   graphology:
     specifier: ^0.25.4
     version: 0.25.4(graphology-types@0.24.7)
+  graphology-operators:
+    specifier: ^1.6.0
+    version: 1.6.0(graphology-types@0.24.7)
+  graphology-shortest-path:
+    specifier: ^2.0.2
+    version: 2.0.2(graphology-types@0.24.7)
   graphology-types:
     specifier: ^0.24.7
     version: 0.24.7
+  graphology-utils:
+    specifier: ^2.5.2
+    version: 2.5.2(graphology-types@0.24.7)
   js-sdsl:
     specifier: ^4.4.2
     version: 4.4.2
@@ -759,6 +771,15 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
+  /@tbui17/iteration-utilities@2.0.2:
+    resolution: {integrity: sha512-FTPCvsLk8SHbTeFDPYsYlpwu4lXv/6EFUuxUzcIOtNmis4I3OyeEbWm4SAoLfT2fFTDD5IQb2YOtygy6vttq3g==}
+    dependencies:
+      '@tbui17/type-utils': 2.1.2
+      js-sdsl: 4.4.2
+      lodash: 4.17.21
+      zod: 3.22.4
+    dev: false
+
   /@tbui17/type-utils@2.1.2:
     resolution: {integrity: sha512-R7GyO5dXbAat8XqAes6/DShukfL5WpurlEImhuGZA5KoPDTadVS8lYExay+p6yVSaUDxaLAgHjipKnoX4f+Lmg==}
     dependencies:
@@ -999,6 +1020,10 @@ packages:
       loupe: 2.3.7
       pretty-format: 29.7.0
     dev: true
+
+  /@yomguithereal/helpers@1.1.1:
+    resolution: {integrity: sha512-UYvAq/XCA7xoh1juWDYsq3W0WywOB+pz8cgVnE1b45ZfdMhBvHDrgmSFG3jXeZSr2tMTYLGHFHON+ekG05Jebg==}
+    dev: false
 
   /acorn-jsx@5.3.2(acorn@8.11.3):
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2057,8 +2082,47 @@ packages:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
     dev: true
 
+  /graphology-indices@0.17.0(graphology-types@0.24.7):
+    resolution: {integrity: sha512-A7RXuKQvdqSWOpn7ZVQo4S33O0vCfPBnUSf7FwE0zNCasqwZVUaCXePuWo5HBpWw68KJcwObZDHpFk6HKH6MYQ==}
+    peerDependencies:
+      graphology-types: '>=0.20.0'
+    dependencies:
+      graphology-types: 0.24.7
+      graphology-utils: 2.5.2(graphology-types@0.24.7)
+      mnemonist: 0.39.7
+    dev: false
+
+  /graphology-operators@1.6.0(graphology-types@0.24.7):
+    resolution: {integrity: sha512-yfnVNsFd6plBw7r6Td4luGlNoQn9MKI56EZ/NcFcRmvu/D1R8eWHjpipNUdBjl5MVV8iSW8e/XuY8YsjRDnLoA==}
+    peerDependencies:
+      graphology-types: '>=0.20.0'
+    dependencies:
+      graphology-types: 0.24.7
+      graphology-utils: 2.5.2(graphology-types@0.24.7)
+    dev: false
+
+  /graphology-shortest-path@2.0.2(graphology-types@0.24.7):
+    resolution: {integrity: sha512-hlGvh4Yb1Vmd2J7wT8Q8+t4RQ6Tx+9wRYm0/fZB9PZJ4uW3nml5kJ7yXZ2+JYWT+7wLLmY5mg3o9bLSAWmv/jQ==}
+    peerDependencies:
+      graphology-types: '>=0.20.0'
+    dependencies:
+      '@yomguithereal/helpers': 1.1.1
+      graphology-indices: 0.17.0(graphology-types@0.24.7)
+      graphology-types: 0.24.7
+      graphology-utils: 2.5.2(graphology-types@0.24.7)
+      mnemonist: 0.39.7
+    dev: false
+
   /graphology-types@0.24.7:
     resolution: {integrity: sha512-tdcqOOpwArNjEr0gNQKCXwaNCWnQJrog14nJNQPeemcLnXQUUGrsCWpWkVKt46zLjcS6/KGoayeJfHHyPDlvwA==}
+    dev: false
+
+  /graphology-utils@2.5.2(graphology-types@0.24.7):
+    resolution: {integrity: sha512-ckHg8MXrXJkOARk56ZaSCM1g1Wihe2d6iTmz1enGOz4W/l831MBCKSayeFQfowgF8wd+PQ4rlch/56Vs/VZLDQ==}
+    peerDependencies:
+      graphology-types: '>=0.23.0'
+    dependencies:
+      graphology-types: 0.24.7
     dev: false
 
   /graphology@0.25.4(graphology-types@0.24.7):
@@ -2844,6 +2908,12 @@ packages:
       pkg-types: 1.0.3
       ufo: 1.3.2
     dev: true
+
+  /mnemonist@0.39.7:
+    resolution: {integrity: sha512-ix3FwHWZgdXUt0dHM8bCrI4r1KMeYx8bCunPCYmvKXq4tn6gbNsqrsb4q0kDbDqbpIOvEaW5Sn+dmDwGydfrwA==}
+    dependencies:
+      obliterator: 2.0.4
+    dev: false
 
   /ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -4218,3 +4288,7 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
     dev: true
+
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: false

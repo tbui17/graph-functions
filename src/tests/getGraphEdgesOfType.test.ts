@@ -4,10 +4,10 @@ import { getGraphEdgesOfType } from ".."
 import { type TaggedUnion } from "type-fest"
 import Graph from "graphology"
 import type { Attributes, EdgeEntry } from "graphology-types"
-import { Edges, Nodes, TestGraph } from "./testUtils/testGraph"
+import { type Edges, type Nodes, TestGraph1 } from "./testUtils/testGraph"
 
 describe("getGraphEdgesOfType should partition edge entries by the types provided in the input.", () => {
-	const g = new TestGraph()
+	const g = new TestGraph1()
 	g.addNode("a", { type: "a", propA: "a" })
 	g.addNode("a2", { type: "a", propA: "a2" })
 	g.addNode("b", { type: "b", propB: "b" })
@@ -95,7 +95,7 @@ describe("getGraphEdgesOfType should partition edge entries by the types provide
 })
 
 describe("getGraphEdgesOfType neighbors", () => {
-	const g = new TestGraph()
+	const g = new TestGraph1()
 
 	const nodeA = { type: "a", propA: "a" } as const
 	const nodeB = { type: "b", propB: "b" } as const

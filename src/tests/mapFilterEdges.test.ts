@@ -1,11 +1,11 @@
 import { describe, expect, expectTypeOf, it } from "vitest"
-import { TestGraph } from "./testUtils/testGraph"
+import { TestGraph1 } from "./testUtils/testGraph"
 import {
 	mapCallbackParametersToEdgeEntry,
 	mapFilterEdgeEntries,
 	mapFilterEdges,
 } from ".."
-const g = new TestGraph()
+const g = new TestGraph1()
 g.addNode("a")
 g.addNode("b")
 g.addNode("c")
@@ -27,7 +27,7 @@ describe("mapFilterEdges", () => {
 
 describe("mapFilterEdgeEntries", () => {
 	it("basic functionality test", () => {
-		const g = new TestGraph()
+		const g = new TestGraph1()
 		g.addNode("a")
 		g.addNode("b")
 		g.addNode("c")

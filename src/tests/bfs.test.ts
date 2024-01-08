@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest"
-import { TestGraph } from "./testUtils/testGraph"
+import { TestGraph1 } from "./testUtils/testGraph"
 import { type EdgeEntry } from "graphology-types"
 import { bfsGraph } from ".."
 import _ from "lodash"
 
 describe("bfs", () => {
-	const g = new TestGraph()
+	const g = new TestGraph1()
 
 	const nodeA = { type: "a", propA: "a" } as const
 	const nodeB = { type: "b", propB: "b" } as const

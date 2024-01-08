@@ -3,10 +3,22 @@ import { RecursorContext } from "./RecursorContext"
 import { Queue } from "js-sdsl"
 
 type ForEachNeighborMethods = Extract<keyof Graph, `forEach${string}Neighbor`>
+
+/**
+ * Options for traversing a graph using BFS.
+ */
 type TraversalOptions = {
-	ignoreTraversalToOtherInputNodes?: boolean
-	neighborStrategy?: ForEachNeighborMethods
+	/**
+	 * Specifies whether to ignore traversal to nodes that are not connected to the input nodes.
+	 */
+	ignoreTraversalToOtherInputNodes?: boolean;
+
+	/**
+	 * Specifies the strategy for iterating over the neighbors of a node during traversal.
+	 */
+	neighborStrategy?: ForEachNeighborMethods;
 }
+
 
 type GraphRecursorVisitor<TGraph extends Graph, R> = (
 	ctx: RecursorContext<TGraph>
@@ -31,10 +43,8 @@ class GraphBFSIterator<TGraph extends Graph> {
 		this.graph = graph
 
 		this.opts = {
-			...{
-				neighborStrategy: "forEachNeighbor" as const,
-				ignoreTraversalToOtherInputNodes: true,
-			},
+			neighborStrategy: "forEachNeighbor" as const,
+			ignoreTraversalToOtherInputNodes: true,
 			...opts,
 		}
 
@@ -44,38 +54,6 @@ class GraphBFSIterator<TGraph extends Graph> {
 			inputNodes = new Set(inputNodes)
 		}
 		this.inputNodes = inputNodes
-	}
-
-	public *[Symbol.iterator]() {
-		for (const inputNode of this.inputNodes) {
-			this.reset(inputNode)
-			while (this.queue.length) {
-				const { current, path, previous } = this.queue.pop()!
-				if (previous !== null) {
-					yield new RecursorContext(
-						this.graph,
-						this.inputNodes,
-						inputNode,
-						previous,
-						current,
-						path
-					)
-				}
-
-				this.graph[this.opts.neighborStrategy](current, (neighbor) => {
-					if (this.shouldSkip(neighbor)) {
-						return
-					}
-					this.seen.add(neighbor)
-					this.queue.push({
-						current: neighbor,
-						path: path.concat(neighbor),
-						previous: current,
-					})
-				})
-			}
-		}
-		return
 	}
 
 	/**
@@ -133,6 +111,18 @@ class GraphBFSIterator<TGraph extends Graph> {
 	}
 }
 
+/**
+ * Performs a breadth-first search traversal on a graph.
+ *
+ * @template TGraph - The type of the graph.
+ * @template R - The return type of the visitor function.
+ * @param {object} params - The parameters for the breadth-first search.
+ * @param {TGraph} params.graph - The graph to traverse.
+ * @param {Set<string> | string | string[]} params.nodes - The starting nodes for the traversal.
+ * @param {GraphRecursorVisitor<TGraph, R>} params.fn - The visitor function to be called for each visited node.
+ * @param {TraversalOptions} [params.opts] - The options for the traversal.
+ * @returns {R | undefined} The result of the visitor function or undefined.
+ */
 export function bfsGraph<TGraph extends Graph, R>({
 	graph,
 	nodes,

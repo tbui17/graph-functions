@@ -6,6 +6,15 @@ function noUndefined<T>(item: T): item is Exclude<T, undefined> {
 	return item !== undefined
 }
 
+/**
+ * Maps and filters the edges of a graph based on the provided arguments.
+ * 
+ * @template TGraph - The type of the graph.
+ * @template TReturn - The return type of the mapping function.
+ * @param {...MapFilterEdgesArgs<TGraph, TReturn>} args - The arguments for mapping and filtering the edges.
+ * @returns {Exclude<TReturn, undefined>[]} - The mapped and filtered edges.
+ * @throws {Error} - If the arguments are invalid.
+ */
 export function mapFilterEdges<TGraph extends Graph, TReturn>(
 	...args: MapFilterEdgesArgs<TGraph, TReturn>
 ): Exclude<TReturn, undefined>[] {
@@ -43,6 +52,15 @@ export function mapFilterEdges<TGraph extends Graph, TReturn>(
 	throw new Error("Invalid arguments")
 }
 
+/**
+ * Maps and filters the entries of the edges in a graph. Converts edges into entries for the callback function.
+ * 
+ * @template TGraph - The type of the graph.
+ * @template TReturn - The type of the returned values.
+ * @param {...MapFilterEdgeEntriesArgs<TGraph, TReturn>} args - The arguments for mapping and filtering the edge entries.
+ * @returns {Exclude<TReturn, undefined>[]} - An array of the mapped and filtered edge entries.
+ * @throws {Error} - If the arguments are invalid.
+ */
 export function mapFilterEdgeEntries<TGraph extends Graph, TReturn>(
 	...args: MapFilterEdgeEntriesArgs<TGraph, TReturn>
 ): Exclude<TReturn, undefined>[] {

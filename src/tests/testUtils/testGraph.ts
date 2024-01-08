@@ -1,5 +1,6 @@
 import Graph from "graphology"
-import { Attributes } from "graphology-types"
+import { type Attributes } from "graphology-types"
+import data from "./testGraphData.json"
 
 abstract class BaseTestGraph<
 	T1 extends Attributes = Attributes,
@@ -25,4 +26,12 @@ type EdgeType1 = { type: "type1"; type1Value: string }
 type EdgeType2 = { type: "type2"; type2Value: boolean }
 export type Edges = EdgeBase | EdgeType1 | EdgeType2
 
-export class TestGraph extends BaseTestGraph<Nodes, Edges> {}
+export class TestGraph1 extends BaseTestGraph<Nodes, Edges> {}
+
+export class TestGraph2 extends Graph {
+	static create() {
+		const graph = new this()
+		graph.import(data as any)
+		return graph
+	}
+}

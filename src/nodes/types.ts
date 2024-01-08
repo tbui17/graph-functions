@@ -68,6 +68,7 @@ export type GetGraphNodesofTypeResult<
 	  : TTypes extends GetGraphTypeField<TGraph>
 	    ? ExtractNodeEntry<TGraph, TTypes>[]
 	    : never
+
 export type NodeFilter<TGraph extends Graph> = SetReturnType<
 	NodeIterationCallback<InferGraphNode<TGraph>>,
 	boolean | void

@@ -1,8 +1,4 @@
-import {
-	type Attributes,
-	type EdgeEntry,
-	type EdgeIterationCallback,
-} from "graphology-types"
+import { type Attributes, type EdgeEntry } from "graphology-types"
 import { type EdgeIterationCallbackParameters } from "../types"
 // [0 edge, 1 attributes, 2 source, 3 target, 4 sourceAttributes, 5 targetAttributes, 6 undirected]
 export enum EdgeEnums {
@@ -14,6 +10,14 @@ export enum EdgeEnums {
 	targetAttributes,
 	undirected,
 }
+/**
+ * Maps edge iteration args into an edge entry.
+ *
+ * @template TNode The type of attributes for the graph nodes.
+ * @template TEdge The type of attributes for the graph edges.
+ * @param parameters The callback parameters to be mapped.
+ * @returns The mapped edge entry.
+ */
 export function mapCallbackParametersToEdgeEntry<
 	TNode extends Attributes,
 	TEdge extends Attributes,
@@ -56,6 +60,14 @@ export function alignEdgeObject<
 	return edge
 }
 
+/**
+ * Aligns an edge and maps it to an object.
+ *
+ * @param selfKey - The key of the self node.
+ * @param edge - The edge to align and map.
+ *
+ * @returns The aligned and mapped edge.
+ */
 export function alignEdgeAndMapToObject<
 	TNode extends Attributes,
 	TEdge extends Attributes,
@@ -92,26 +104,4 @@ export function alignEdge<TNode extends Attributes, TEdge extends Attributes>(
 		]
 	}
 	return edge
-}
-export function createEdgeEntryFromIterationArgs<
-	TNodeAttributes extends Attributes,
-	TEdgeAttributes extends Attributes,
->([
-	edge,
-	attributes,
-	source,
-	target,
-	sourceAttributes,
-	targetAttributes,
-	undirected,
-]: Parameters<EdgeIterationCallback<TNodeAttributes, TEdgeAttributes>>) {
-	return {
-		edge,
-		attributes,
-		source,
-		target,
-		sourceAttributes,
-		targetAttributes,
-		undirected,
-	}
 }

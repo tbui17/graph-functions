@@ -1,0 +1,216 @@
+{
+	"options": { "type": "mixed", "multi": false, "allowSelfLoops": true },
+	"attributes": {},
+	"nodes": [
+		{
+			"key": "table1",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "password0", "data_type": "text" },
+					{ "column_name": "updatedAt1", "data_type": "binary" },
+					{ "column_name": "password2", "data_type": "smallint" },
+					{ "column_name": "category3", "data_type": "mediumint" },
+					{ "column_name": "id4", "data_type": "binary" },
+					{ "column_name": "createdAt5", "data_type": "timestamp" },
+					{ "column_name": "name6", "data_type": "datetime" },
+					{ "column_name": "token7", "data_type": "bit" },
+					{ "column_name": "group8", "data_type": "double" },
+					{ "column_name": "createdAt9", "data_type": "timestamp" }
+				]
+			}
+		},
+		{
+			"key": "table2",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "token0", "data_type": "int" },
+					{ "column_name": "token1", "data_type": "set" },
+					{ "column_name": "updatedAt2", "data_type": "bit" },
+					{ "column_name": "status3", "data_type": "real" },
+					{ "column_name": "category4", "data_type": "boolean" },
+					{ "column_name": "name5", "data_type": "binary" },
+					{ "column_name": "updatedAt6", "data_type": "bit" },
+					{ "column_name": "name7", "data_type": "varchar" },
+					{ "column_name": "group8", "data_type": "smallint" },
+					{ "column_name": "group9", "data_type": "double" }
+				]
+			}
+		},
+		{
+			"key": "table3",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "name0", "data_type": "enum" },
+					{ "column_name": "email1", "data_type": "point" },
+					{ "column_name": "group2", "data_type": "enum" },
+					{ "column_name": "updatedAt3", "data_type": "real" },
+					{ "column_name": "avatar4", "data_type": "time" },
+					{ "column_name": "avatar5", "data_type": "decimal" },
+					{ "column_name": "avatar6", "data_type": "tinyint" },
+					{ "column_name": "comment7", "data_type": "decimal" },
+					{ "column_name": "category8", "data_type": "set" },
+					{ "column_name": "comment9", "data_type": "serial" }
+				]
+			}
+		},
+		{
+			"key": "table4",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "token0", "data_type": "point" },
+					{ "column_name": "title1", "data_type": "bigint" },
+					{ "column_name": "category2", "data_type": "boolean" },
+					{ "column_name": "updatedAt3", "data_type": "time" },
+					{ "column_name": "comment4", "data_type": "timestamp" },
+					{ "column_name": "email5", "data_type": "timestamp" },
+					{ "column_name": "comment6", "data_type": "point" },
+					{ "column_name": "name7", "data_type": "serial" },
+					{ "column_name": "id8", "data_type": "real" },
+					{ "column_name": "name9", "data_type": "decimal" }
+				]
+			}
+		},
+		{
+			"key": "table5",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "status0", "data_type": "geometry" },
+					{ "column_name": "comment1", "data_type": "date" },
+					{ "column_name": "token2", "data_type": "real" },
+					{ "column_name": "password3", "data_type": "date" },
+					{ "column_name": "id4", "data_type": "serial" },
+					{ "column_name": "category5", "data_type": "point" },
+					{ "column_name": "email6", "data_type": "smallint" },
+					{ "column_name": "status7", "data_type": "bigint" },
+					{ "column_name": "updatedAt8", "data_type": "time" },
+					{ "column_name": "avatar9", "data_type": "boolean" }
+				]
+			}
+		},
+		{
+			"key": "table6",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "createdAt0", "data_type": "int" },
+					{ "column_name": "title1", "data_type": "date" },
+					{ "column_name": "category2", "data_type": "datetime" },
+					{ "column_name": "category3", "data_type": "double" },
+					{ "column_name": "avatar4", "data_type": "point" },
+					{ "column_name": "avatar5", "data_type": "mediumint" },
+					{ "column_name": "comment6", "data_type": "bigint" },
+					{ "column_name": "group7", "data_type": "decimal" },
+					{ "column_name": "status8", "data_type": "enum" },
+					{ "column_name": "password9", "data_type": "datetime" }
+				]
+			}
+		},
+		{
+			"key": "table7",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "avatar0", "data_type": "geometry" },
+					{ "column_name": "avatar1", "data_type": "smallint" },
+					{ "column_name": "category2", "data_type": "double" },
+					{ "column_name": "name3", "data_type": "float" },
+					{ "column_name": "phone4", "data_type": "date" },
+					{ "column_name": "phone5", "data_type": "double" },
+					{ "column_name": "password6", "data_type": "smallint" },
+					{ "column_name": "group7", "data_type": "decimal" },
+					{ "column_name": "id8", "data_type": "bit" },
+					{ "column_name": "createdAt9", "data_type": "tinyint" }
+				]
+			}
+		},
+		{
+			"key": "table8",
+			"attributes": {
+				"tableColumns": [
+					{ "column_name": "status0", "data_type": "real" },
+					{ "column_name": "title1", "data_type": "mediumint" },
+					{ "column_name": "title2", "data_type": "point" },
+					{ "column_name": "avatar3", "data_type": "tinyint" },
+					{ "column_name": "category4", "data_type": "tinyint" },
+					{ "column_name": "createdAt5", "data_type": "double" },
+					{ "column_name": "id6", "data_type": "real" },
+					{ "column_name": "title7", "data_type": "binary" },
+					{ "column_name": "category8", "data_type": "blob" },
+					{ "column_name": "phone9", "data_type": "timestamp" }
+				]
+			}
+		}
+	],
+	"edges": [
+		{
+			"key": "table1_to_table2",
+			"source": "table1",
+			"target": "table2",
+			"attributes": {
+				"constraint_name": "table1_to_table2",
+				"table_name": "table1",
+				"column_name": "id",
+				"foreign_table_name": "table2",
+				"foreign_column_name": "id"
+			}
+		},
+		{
+			"key": "table1_to_table4",
+			"source": "table1",
+			"target": "table4",
+			"attributes": {
+				"constraint_name": "table1_to_table4",
+				"table_name": "table1",
+				"column_name": "id",
+				"foreign_table_name": "table4",
+				"foreign_column_name": "id"
+			}
+		},
+		{
+			"key": "table2_to_table3",
+			"source": "table2",
+			"target": "table3",
+			"attributes": {
+				"constraint_name": "table2_to_table3",
+				"table_name": "table2",
+				"column_name": "id",
+				"foreign_table_name": "table3",
+				"foreign_column_name": "id"
+			}
+		},
+		{
+			"key": "table3_to_table4",
+			"source": "table3",
+			"target": "table4",
+			"attributes": {
+				"constraint_name": "table3_to_table4",
+				"table_name": "table3",
+				"column_name": "id",
+				"foreign_table_name": "table4",
+				"foreign_column_name": "id"
+			}
+		},
+		{
+			"key": "table4_to_table5",
+			"source": "table4",
+			"target": "table5",
+			"attributes": {
+				"constraint_name": "table4_to_table5",
+				"table_name": "table4",
+				"column_name": "id",
+				"foreign_table_name": "table5",
+				"foreign_column_name": "id"
+			}
+		},
+		{
+			"key": "table6_to_table7",
+			"source": "table6",
+			"target": "table7",
+			"attributes": {
+				"constraint_name": "table6_to_table7",
+				"table_name": "table6",
+				"column_name": "id",
+				"foreign_table_name": "table7",
+				"foreign_column_name": "id"
+			}
+		}
+	]
+}

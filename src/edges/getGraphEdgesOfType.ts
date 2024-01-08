@@ -8,7 +8,6 @@ import {
 	type GetGraphEdgesOfTypesResult,
 } from "./types"
 import { filterEdgeEntries } from "./filterEdgeEntries"
-import partition from "lodash/partition"
 
 function getGraphEdgesOfTypeSingle<
 	TGraph extends GraphWithTypeForEdge,
@@ -40,6 +39,20 @@ function getGraphEdgesOfTypeSingle<
 }
 
 // array autocomplete does not work with overloading through type interfaces
+
+
+/**
+ * Retrieves the edges of a graph based on the specified types.
+ * 
+ * @template TGraph - The type of the graph.
+ * @template TTypes - The type of the edge types.
+ * @param {TGraph} graph - The graph to retrieve the edges from.
+ * @param {string | TTypes} nodeOrTypes - The node or types to filter the edges by.
+ * @param {string | TTypes} [neighborOrTypes] - The neighbor or types to filter the edges by.
+ * @param {TTypes} [types] - The specific types to filter the edges by.
+ * @returns {GetGraphEdgesOfTypesResult<TGraph, TTypes>} - The edges of the graph that match the specified types.
+ * @throws {Error} - If the arguments are invalid.
+ */
 export function getGraphEdgesOfType<
 	TGraph extends GraphWithTypeForEdge,
 	TTypes extends TypesContainerForEdge<TGraph>,

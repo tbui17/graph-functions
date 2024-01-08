@@ -1,10 +1,10 @@
 import { describe, expect, expectTypeOf, it } from "vitest"
-import { TestGraph } from "./testUtils/testGraph"
+import { TestGraph1 } from "./testUtils/testGraph"
 import { mapFilterNodes } from ".."
 
 describe("mapFilterEdges", () => {
 	it("basic functionality test", () => {
-		const g = new TestGraph()
+		const g = new TestGraph1()
 		g.addNode("a", { type: "a", propA: "a" })
 		g.addNode("a2", { type: "a", propA: "a2" })
 		g.addNode("b", { type: "b", propB: "b" })

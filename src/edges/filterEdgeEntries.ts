@@ -1,5 +1,5 @@
 import type Graph from "graphology"
-import { createEdgeEntryFromIterationArgs } from "./mappers"
+import { mapCallbackParametersToEdgeEntry } from "./mappers"
 import { mapFilterEdges } from "./mapFilterEdges"
 import { type FilterEdgeEntriesArgs } from "./types"
 import { type InferGraphEdgeEntry } from "../types"
@@ -22,7 +22,7 @@ export const filterEdgeEntries: FilterEdgeEntries = (...args) => {
 			filterOrNeighbor,
 			(...args) => {
 				if (filter(...args)) {
-					return createEdgeEntryFromIterationArgs(args)
+					return mapCallbackParametersToEdgeEntry(args)
 				}
 			}
 		)
@@ -34,14 +34,14 @@ export const filterEdgeEntries: FilterEdgeEntries = (...args) => {
 	) {
 		return mapFilterEdges(graph, filterOrNode, (...args) => {
 			if (filterOrNeighbor(...args)) {
-				return createEdgeEntryFromIterationArgs(args)
+				return mapCallbackParametersToEdgeEntry(args)
 			}
 		})
 	}
 	if (typeof filterOrNode === "function") {
 		return mapFilterEdges(graph, (...args) => {
 			if (filterOrNode(...args)) {
-				return createEdgeEntryFromIterationArgs(args)
+				return mapCallbackParametersToEdgeEntry(args)
 			}
 		})
 	}
