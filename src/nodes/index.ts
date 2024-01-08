@@ -1,5 +1,6 @@
 export * from "./filterNodeEntries"
 export * from "./getGraphNodesOfType"
+export * from "./getNodeComponent"
 export * from "./getNodeEntry"
 export * from "./mapFilterNodes"
 export * from "./types"

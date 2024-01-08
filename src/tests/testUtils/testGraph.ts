@@ -1,5 +1,5 @@
 import Graph from "graphology"
-import { type Attributes } from "graphology-types"
+import { type GraphOptions, type Attributes } from "graphology-types"
 import data from "./testGraphData.json"
 
 abstract class BaseTestGraph<
@@ -29,8 +29,14 @@ export type Edges = EdgeBase | EdgeType1 | EdgeType2
 export class TestGraph1 extends BaseTestGraph<Nodes, Edges> {}
 
 export class TestGraph2 extends Graph {
-	static create() {
-		const graph = new this()
+	static create(
+		configs: GraphOptions = {
+			type: "mixed",
+			allowSelfLoops: true,
+			multi: true,
+		}
+	) {
+		const graph = new this(configs)
 		graph.import(data as any)
 		return graph
 	}
