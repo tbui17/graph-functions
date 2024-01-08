@@ -15,15 +15,22 @@ import {
 
 /**
  * Represents a context for graph recursion.
+ * 
+ * Provides a subset of node/edge query methods similar to a graph, but with the source and target nodes passed in as the node and neighbor parameters.
  * @template TGraph - The type of the graph.
  */
 export class RecursorContext<TGraph extends Graph> {
 	constructor(
 		public graph: TGraph,
+		/** The nodes that were provided as input to the recursion. */
 		public inputNodes: Set<string>,
+		/**	The starting node of the current recursion session. */
 		public currentInputNode: string,
+		/** The previous node in recursion. */
 		public source: string,
+		/** The current node in recursion. */
 		public target: string,
+		/** The path from the currentInputNode to the target node. */
 		public path: string[]
 	) {}
 
