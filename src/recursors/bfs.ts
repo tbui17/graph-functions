@@ -1,8 +1,8 @@
 import type Graph from "graphology"
 import { RecursorContext } from "./RecursorContext"
 import { Queue } from "js-sdsl"
-
-type ForEachNeighborMethods = Extract<keyof Graph, `forEach${string}Neighbor`>
+import { type ForEachNeighborMethods } from "../types"
+import defaults from "lodash/defaults"
 
 /**
  * Options for traversing a graph using BFS.
@@ -11,14 +11,13 @@ type TraversalOptions = {
 	/**
 	 * Specifies whether to ignore traversal to nodes that are not connected to the input nodes.
 	 */
-	ignoreTraversalToOtherInputNodes?: boolean;
+	ignoreTraversalToOtherInputNodes?: boolean
 
 	/**
 	 * Specifies the strategy for iterating over the neighbors of a node during traversal.
 	 */
-	neighborStrategy?: ForEachNeighborMethods;
+	neighborStrategy?: ForEachNeighborMethods
 }
-
 
 type GraphRecursorVisitor<TGraph extends Graph, R> = (
 	ctx: RecursorContext<TGraph>
@@ -41,12 +40,10 @@ class GraphBFSIterator<TGraph extends Graph> {
 		opts: TraversalOptions = {}
 	) {
 		this.graph = graph
-
-		this.opts = {
+		this.opts = defaults(opts, {
 			neighborStrategy: "forEachNeighbor" as const,
 			ignoreTraversalToOtherInputNodes: true,
-			...opts,
-		}
+		})
 
 		if (typeof inputNodes === "string") {
 			inputNodes = new Set([inputNodes])

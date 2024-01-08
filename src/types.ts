@@ -1,5 +1,6 @@
 import type Graph from "graphology"
 
+
 import {
 	type NodeEntry,
 	type EdgeEntry,
@@ -26,8 +27,8 @@ export type InferGraph<
 	? Parameter extends "node"
 		? TNode
 		: Parameter extends "edge"
-		  ? TEdge
-		  : TGraphAttributes
+			? TEdge
+			: TGraphAttributes
 	: never
 export type InferGraphAttributes<TGraph extends Graph> = TGraph extends Graph<
 	any,
@@ -70,3 +71,7 @@ export type ObjectWithTypeFieldPassthrough =
 	ObjectWithTypeFieldGenericPassthrough<string>
 
 export type GetTypeField<T extends ObjectWithTypeField> = T["type"]
+export type ForEachNeighborMethods = Extract<
+	keyof Graph,
+	`forEach${string}Neighbor`
+>
