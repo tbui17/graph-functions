@@ -4,16 +4,28 @@ import { mapCallbackParametersToEdgeEntry } from "."
 import { type InferGraphEdgeEntry } from ".."
 
 /**
- * Groups the edge entries of a graph based on a specified function.
+ * Groups edge entries of a graph based on a provided function.
  *
- * @template TGraph - The type of the graph.
- * @param {Object} options - The options for grouping the edge entries.
- * @param {TGraph} options.graph - The graph to operate on.
- * @param {string | [string, string]} [options.node] - The node or node + neighbor to group edges for. If not specified, all nodes will be considered.
- * @param {(edge: InferGraphEdgeEntry<TGraph>) => string} options.fn - The function to determine the group key for each edge entry.
- * @param {Extract<keyof Graph, `reduce${string}Edges`>} [options.edgeReduceStrategy="reduceEdges"] - The edge reduce strategy to use.
- * @param {boolean} [options.ignoreParallelEdges=false] - Whether to ignore parallel edges when grouping.
- * @returns {Record<string, InferGraphEdgeEntry<TGraph>[]>} - The grouped edge entries.
+ * @param {Object} params - The parameters for the function.
+ * @param {TGraph} params.graph - The graph to group edge entries from.
+ * @param {string | [string, string]} [params.node] - The node or pair of nodes to consider for grouping. If not provided, all edges in the graph are considered.
+ * @param {(edge: InferGraphEdgeEntry<TGraph>) => string} params.fn - The function used to group the edge entries. It should return a string that will be used as the key for the group.
+ * @param {Extract<keyof Graph, `reduce${string}Edges`>} [params.edgeReduceStrategy="reduceEdges"] - The strategy to use when reducing edges. This determines which types of edges will be iterated over based on their directionality, with reduceEdges iterating over edges of any direction. It should be a method name of the Graph class that starts with "reduce" and ends with "Edges". Default is "reduceEdges".
+ * @param {boolean} [params.ignoreParallelEdges=false] - Whether to ignore parallel edges when grouping. If true, only the first edge between two nodes is considered. Default is false.
+ *
+ * @returns {Record<string, InferGraphEdgeEntry<TGraph>[]>} - An object where each key is a group key returned by the `fn` function, and each value is an array of edge entries belonging to that group.
+ *
+ * @example
+ * const graph = new Graph();
+ * // ...add some edges to the graph...
+ * const groups = groupEdgeEntries({
+ *   graph,
+ *   node: 'node1',
+ *   fn: (edge) => edge.attributes.type,
+ *   edgeReduceStrategy: 'reduceDirectedEdges',
+ *   ignoreParallelEdges: true,
+ * });
+ * // groups now contains edge entries of 'node1', grouped by their 'type' attribute, considering only directed edges and ignoring parallel edges.
  */
 export function groupEdgeEntries<TGraph extends Graph>({
 	graph,
