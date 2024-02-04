@@ -6,25 +6,25 @@ import {
 	type InferGraphEdge,
 	type InferGraphNode,
 	mapCallbackParametersToEdgeEntry,
-	toUndirectedKeepEdgeNames,
 } from "."
 
 /**
- * Assumes provided graph was originally an unweighted DAG, creates an undirected unweighted copy for this solution.
  *
- * Retrieves smallest subgraph containing all specified terminal nodes, disregarding weight and direction. The copy is returned as an undirected graph.
+ * Assumes provided subgraph is a DAG.
+ *
+ * Retrieves smallest subgraph containing all specified terminal nodes, disregarding weight and direction
  *
  * @returns The subgraph if the nodes are connected.
  *
  * @throws {SubgraphError} - If the provided nodes are not connected in the original graph.
  */
-export function minOrderSubgraph<TGraph extends Graph>(
+export function minOrderSubgraphDAG<TGraph extends Graph>(
 	graph: TGraph,
 	nodes: string[]
 ) {
 	const subgraph = new Graph()
-	const undirectedGraph = toUndirectedKeepEdgeNames(graph)
-	mergeKeyNodeComponentIntoSubgraph(nodes, undirectedGraph, subgraph)
+
+	mergeKeyNodeComponentIntoSubgraph(nodes, graph, subgraph)
 	return subgraph as Graph<InferGraphNode<TGraph>, InferGraphEdge<TGraph>>
 }
 

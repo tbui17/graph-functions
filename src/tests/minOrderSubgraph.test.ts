@@ -1,6 +1,6 @@
 import { expect, it } from "vitest"
 import { TestGraph2 } from "./testUtils/testGraph"
-import { SubgraphError, minOrderSubgraph } from ".."
+import { SubgraphError, minOrderSubgraphDAG } from ".."
 import _ from "lodash"
 
 /**
@@ -17,7 +17,7 @@ const graph = TestGraph2.create()
 
 it("should exclude table2 in the subgraph", () => {
 	const inp = ["table1", "table3", "table5"]
-	const res = minOrderSubgraph(graph, inp)
+	const res = minOrderSubgraphDAG(graph, inp)
 	expect(res.nodes()).toEqual(
 		expect.arrayContaining(["table1", "table3", "table4", "table5"])
 	)
@@ -26,7 +26,7 @@ it("should exclude table2 in the subgraph", () => {
 
 it("should keep attributes", () => {
 	const inp = ["table1", "table3", "table5"]
-	const graph2 = minOrderSubgraph(graph, inp)
+	const graph2 = minOrderSubgraphDAG(graph, inp)
 
 	const nodeEntries = [...graph.nodeEntries()]
 	expect(nodeEntries.length).toBeGreaterThan(0)
@@ -46,19 +46,19 @@ it("should keep attributes", () => {
 
 it("should keep node keys", () => {
 	const inp = ["table1", "table3", "table5"]
-	const res = minOrderSubgraph(graph, inp)
+	const res = minOrderSubgraphDAG(graph, inp)
 
 	expect(res.nodes().every((node) => graph.hasNode(node))).toBe(true)
 })
 
 it("should keep edge keys", () => {
 	const inp = ["table1", "table3", "table5"]
-	const res = minOrderSubgraph(graph, inp)
+	const res = minOrderSubgraphDAG(graph, inp)
 
 	expect(res.edges().every((edge) => graph.hasEdge(edge))).toBe(true)
 })
 
 it("should throw if nodes have no connection in the graph", () => {
 	const inp = ["table1", "table3", "table6"]
-	expect(() => minOrderSubgraph(graph, inp)).toThrowError(SubgraphError)
+	expect(() => minOrderSubgraphDAG(graph, inp)).toThrowError(SubgraphError)
 })
