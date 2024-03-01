@@ -9,41 +9,19 @@ type FilterEdgeEntries = <TGraph extends Graph>(
 ) => InferGraphEdgeEntry<TGraph>[]
 
 export const filterEdgeEntries: FilterEdgeEntries = (...args) => {
-	const [graph, filterOrNode, filterOrNeighbor, filter] = args
+	const [graph, ...rest] = args
+	const lastIndex = rest.length - 1
+	rest[lastIndex] = createFn(
+		rest[lastIndex] as (...args: any[]) => boolean
+	) as any
+	return mapFilterEdges(graph, ...rest) as any
+}
 
-	if (
-		typeof filterOrNode === "string" &&
-		typeof filterOrNeighbor === "string" &&
-		typeof filter === "function"
-	) {
-		return mapFilterEdges(
-			graph,
-			filterOrNode,
-			filterOrNeighbor,
-			(...args) => {
-				if (filter(...args)) {
-					return mapCallbackParametersToEdgeEntry(args)
-				}
-			}
-		)
+function createFn(filter: (...args: any[]) => boolean) {
+	return (...args: any[]) => {
+		if (filter(...args)) {
+			// @ts-expect-error Returns expected type in actual use.
+			return mapCallbackParametersToEdgeEntry(args)
+		}
 	}
-
-	if (
-		typeof filterOrNode === "string" &&
-		typeof filterOrNeighbor === "function"
-	) {
-		return mapFilterEdges(graph, filterOrNode, (...args) => {
-			if (filterOrNeighbor(...args)) {
-				return mapCallbackParametersToEdgeEntry(args)
-			}
-		})
-	}
-	if (typeof filterOrNode === "function") {
-		return mapFilterEdges(graph, (...args) => {
-			if (filterOrNode(...args)) {
-				return mapCallbackParametersToEdgeEntry(args)
-			}
-		})
-	}
-	throw new Error("Invalid arguments")
 }

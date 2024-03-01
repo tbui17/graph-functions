@@ -6,6 +6,7 @@ import {
 } from "./types"
 
 import { filterNodeEntries } from "./filterNodeEntries"
+import { getTypes } from "../internal/getTypes"
 
 /**
  * Retrieves graph nodes of a specific type from the given graph.
@@ -57,24 +58,20 @@ export function getGraphNodesOfType<
 	TGraph extends GraphWithTypeForNode,
 	TTypes extends TypesContainer<TGraph>,
 >(graph: TGraph, types: TTypes): GetGraphNodesofTypeResult<TGraph, TTypes> {
-	const nodes = {} as any
 	if (typeof types === "string") {
 		return getGraphNodesOfTypeSingle(
 			graph,
 			types
 		) as GetGraphNodesofTypeResult<TGraph, TTypes>
-	} else if (Array.isArray(types)) {
-		for (const type of types) {
-			nodes[type] = getGraphNodesOfTypeSingle(graph, type)
-		}
-	} else {
-		for (const type in types) {
-			nodes[type] = getGraphNodesOfTypeSingle(graph, type)
-		}
 	}
 
-	return nodes
+	return getTypes(types).reduce((acc, curr) => {
+		acc[curr] = getGraphNodesOfTypeSingle(graph, curr)
+		return acc
+	}, {} as any)
 }
+
+
 function getGraphNodesOfTypeSingle<
 	TGraph extends GraphWithTypeForNode,
 	const TType extends GetGraphTypeField<TGraph>,

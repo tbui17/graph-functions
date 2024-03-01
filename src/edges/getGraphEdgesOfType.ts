@@ -1,49 +1,20 @@
-import { type InferGraphEdge } from "../types"
-
 import {
 	type GraphWithTypeForEdge,
-	type GetGraphEdgesOfTypeArgs,
-	type GetGraphEdgesOfTypeImplResult,
 	type TypesContainerForEdge,
 	type GetGraphEdgesOfTypesResult,
 } from "./types"
 import { filterEdgeEntries } from "./filterEdgeEntries"
 
-function getGraphEdgesOfTypeSingle<
-	TGraph extends GraphWithTypeForEdge,
-	const TType extends InferGraphEdge<TGraph>["type"],
->(
-	...args: GetGraphEdgesOfTypeArgs<TGraph, TType>
-): GetGraphEdgesOfTypeImplResult<TGraph, TType> {
-	const [graph, nodeOrType, neighborOrType, type] = args
-
-	if (typeof type === "string" && typeof neighborOrType === "string") {
-		//@ts-expect-error Returns expected type in actual use.
-		return filterEdgeEntries(
-			graph,
-			nodeOrType,
-			neighborOrType,
-			(_, attr) => attr.type === type
-		)
-	}
-	if (typeof neighborOrType === "string") {
-		//@ts-expect-error Returns expected type in actual use.
-		return filterEdgeEntries(
-			graph,
-			nodeOrType,
-			(_, attr) => attr.type === neighborOrType
-		)
-	}
-	//@ts-expect-error Returns expected type in actual use.
-	return filterEdgeEntries(graph, (_, attr) => attr.type === nodeOrType)
-}
+import compact from "lodash/fp/compact"
+import flow from "lodash/fp/flow"
+import map from "lodash/fp/map"
+import { getTypes } from "../internal/getTypes"
 
 // array autocomplete does not work with overloading through type interfaces
 
-
 /**
  * Retrieves the edges of a graph based on the specified types.
- * 
+ *
  * @template TGraph - The type of the graph.
  * @template TTypes - The type of the edge types.
  * @param {TGraph} graph - The graph to retrieve the edges from.
@@ -86,96 +57,62 @@ export function getGraphEdgesOfType<
 	neighborOrTypes?: string | TTypes,
 	types?: TTypes
 ): GetGraphEdgesOfTypesResult<TGraph, TTypes> {
-	const edges = {} as any
+	const args = [nodeOrTypes, neighborOrTypes, types]
+	return flow(
+		() => args,
+		compact,
+		createGetEdgesArgs,
+		(result) => getEdges(result, graph)
+	)()
+}
 
-	if (
-		Array.isArray(types) &&
-		typeof neighborOrTypes === "string" &&
-		typeof nodeOrTypes === "string"
-	) {
-		for (const type of types) {
-			edges[type] = getGraphEdgesOfTypeSingle(
-				graph,
-				nodeOrTypes,
-				neighborOrTypes,
-				type
-			)
-		}
-		return edges
-	}
-	if (Array.isArray(neighborOrTypes) && typeof nodeOrTypes === "string") {
-		for (const type of neighborOrTypes) {
-			edges[type] = getGraphEdgesOfTypeSingle(graph, nodeOrTypes, type)
-		}
-		return edges
-	}
-	if (Array.isArray(nodeOrTypes)) {
-		for (const type of nodeOrTypes) {
-			edges[type] = getGraphEdgesOfTypeSingle(graph, type)
-		}
-		return edges
-	}
+interface GetEdgesValue {
+	type: string
+	args: any[]
+}
 
-	if (
-		typeof types === "object" &&
-		typeof neighborOrTypes === "string" &&
-		typeof nodeOrTypes === "string"
-	) {
-		for (const type in types) {
-			edges[type] = getGraphEdgesOfTypeSingle(
-				graph,
-				nodeOrTypes,
-				neighborOrTypes,
-				type
-			)
-		}
-		return edges
-	}
+type GetEdgesArgs =
+	| {
+			type: "single"
+			value: GetEdgesValue
+	  }
+	| {
+			type: "multi"
+			value: GetEdgesValue[]
+	  }
 
-	if (
-		typeof neighborOrTypes === "object" &&
-		typeof nodeOrTypes === "string"
-	) {
-		for (const type in neighborOrTypes) {
-			edges[type] = getGraphEdgesOfTypeSingle(graph, nodeOrTypes, type)
-		}
-		return edges
+function getEdges(result: GetEdgesArgs, graph: any) {
+	if (result.type === "multi") {
+		return result.value.reduce((acc: any, { type, args }: any) => {
+			// @ts-expect-error Returns expected type in actual use.
+			acc[type] = filterEdgeEntries(graph, ...args)
+			return acc
+		}, {} as any)
 	}
-	if (typeof nodeOrTypes === "object") {
-		for (const type in nodeOrTypes) {
-			edges[type] = getGraphEdgesOfTypeSingle(graph, type)
+	// @ts-expect-error Returns expected type in actual use.
+	return filterEdgeEntries(graph, ...result.value.args)
+}
+
+function createGetEdgesArgs(data: any[]): GetEdgesArgs {
+	function createArgs(type: any) {
+		return {
+			type,
+			args: [...data, createFn(type)],
 		}
-		return edges
+	}
+	const last = data.pop()
+	if (typeof last === "object") {
+		return flow(
+			() => last,
+			getTypes,
+			map(createArgs),
+			(s) => ({ type: "multi", value: s }) as const
+		)()
 	}
 
-	if (
-		typeof types === "string" &&
-		typeof neighborOrTypes === "string" &&
-		typeof nodeOrTypes === "string"
-	) {
-		return getGraphEdgesOfTypeSingle(
-			graph,
-			nodeOrTypes,
-			neighborOrTypes,
-			types
-		) as GetGraphEdgesOfTypesResult<TGraph, TTypes>
-	}
-	if (
-		typeof neighborOrTypes === "string" &&
-		typeof nodeOrTypes === "string"
-	) {
-		return getGraphEdgesOfTypeSingle(
-			graph,
-			nodeOrTypes,
-			neighborOrTypes
-		) as GetGraphEdgesOfTypesResult<TGraph, TTypes>
-	}
-	if (typeof nodeOrTypes === "string") {
-		return getGraphEdgesOfTypeSingle(
-			graph,
-			nodeOrTypes
-		) as GetGraphEdgesOfTypesResult<TGraph, TTypes>
-	}
+	return { type: "single", value: createArgs(last) } as const
+}
 
-	throw new Error("Invalid arguments")
+function createFn(type: any) {
+	return (_: any, attr: any) => attr.type === type
 }
